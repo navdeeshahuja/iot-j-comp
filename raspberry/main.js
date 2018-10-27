@@ -1,6 +1,6 @@
 var noble = require('noble');
+var mqtt_client = require('mqtt');
 
-//replace with your hardware address
 var addressToTrack = "74:da:ea:b2:39:8a";
 var raspberry_id = process.env.RID;
 
@@ -8,13 +8,19 @@ noble.on('discover', function(peripheral){
 	if(peripheral.address == addressToTrack){
 		var rssi = peripheral.rssi;
 		var distance  = calculateDistance(rssi)*100;
-		console.log(distance);
+		var json = {
+			raspberry_id: raspberry_id,
+			distance: distance,
+			unit: "cm"
+		}
+		console.log("publishing to mqtt")
+		mqtt_client.publish(mqtt_client.TOPIC, json);
 	}
 });
 
 function calculateDistance(rssi) {
 
-	var txPower = -59 //hard coded power value. Usually ranges between -59 to -65
+	var txPower = -59
 
 	if (rssi == 0) {
 		return -1.0; 
