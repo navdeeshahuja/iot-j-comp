@@ -3,7 +3,7 @@ var mqtt_client = require('./mqtt');
 
 var addressToTrack = "74:da:ea:b2:39:8a";
 var raspberry_id = process.env.RID;
-
+var counter = 1;
 noble.on('discover', function(peripheral){
 	if(peripheral.address == addressToTrack){
 		var rssi = peripheral.rssi;
@@ -13,7 +13,7 @@ noble.on('discover', function(peripheral){
 			distance: distance,
 			unit: "cm"
 		}
-		console.log("publishing to mqtt")
+		console.log("publishing to mqtt", counter++);
 		mqtt_client.publish(mqtt_client.TOPIC, JSON.stringify(json));
 	}
 });
