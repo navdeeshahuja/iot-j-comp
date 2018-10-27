@@ -1,5 +1,5 @@
 var noble = require('noble');
-var mqtt_client = require('mqtt');
+var mqtt_client = require('./mqtt');
 
 var addressToTrack = "74:da:ea:b2:39:8a";
 var raspberry_id = process.env.RID;
@@ -14,7 +14,7 @@ noble.on('discover', function(peripheral){
 			unit: "cm"
 		}
 		console.log("publishing to mqtt")
-		mqtt_client.publish(mqtt_client.TOPIC, json);
+		mqtt_client.publish(mqtt_client.TOPIC, JSON.stringify(json));
 	}
 });
 
