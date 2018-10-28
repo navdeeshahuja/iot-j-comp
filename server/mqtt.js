@@ -6,6 +6,7 @@ var TOPIC2 = 'iot-j-comp-play-topic-random-18219419194769';
 
 client.on('connect', function () {
 	client.subscribe(TOPIC, function (err) {
+		client.subscribe("iot-j-comp-play-topic-random-18219417194769")
 		if (err) {
 			throw err;
 		}
@@ -13,8 +14,8 @@ client.on('connect', function () {
 })
 
 client.on('message', function(topic, message) {
-	if(topic == TOPIC)
-		mqtt_message_handler(client, message);
+	if(topic == TOPIC || topic == "iot-j-comp-play-topic-random-18219417194769")
+		mqtt_message_handler(client, topic, message);
 });
 
 
